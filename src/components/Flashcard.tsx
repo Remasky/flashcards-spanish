@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -11,11 +11,12 @@ interface FlashcardProps {
     front: string;
     back: string;
   };
+  userAnswer: string;
+  setUserAnswer: (answer: string) => void;
 }
 
-export const Flashcard: React.FC<FlashcardProps> = ({ flashcard }) => {
+export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, setUserAnswer }) => {
   const [isFlipped, setIsFlipped] = useState(false);
-  const [userAnswer, setUserAnswer] = useState("");
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
   const handleFlip = () => {

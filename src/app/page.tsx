@@ -182,6 +182,7 @@ export default function Home() {
   const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
   const [decks, setDecks] = useState(["Default Deck"]);
   const [selectedDeck, setSelectedDeck] = useState("Default Deck");
+  const [userAnswer, setUserAnswer] = useState("");
 
   const addFlashcard = (front: string, back: string) => {
     const newFlashcard = { id: flashcards.length + 1, front, back };
@@ -190,16 +191,19 @@ export default function Home() {
 
   const nextFlashcard = () => {
     setCurrentFlashcardIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
+    setUserAnswer(""); // Clear the answer field
   };
 
   const prevFlashcard = () => {
     setCurrentFlashcardIndex((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
+    setUserAnswer(""); // Clear the answer field
   };
 
   const randomizeFlashcards = useCallback(() => {
     const shuffledFlashcards = [...flashcards].sort(() => Math.random() - 0.5);
     setFlashcards(shuffledFlashcards);
     setCurrentFlashcardIndex(0); // Reset to the first flashcard after shuffling
+    setUserAnswer(""); // Clear the answer field
   }, [flashcards]);
 
   return (
@@ -215,7 +219,7 @@ export default function Home() {
         {/* Flashcard Display */}
         <div className="md:w-2/4">
           {flashcards.length > 0 ? (
-            <Flashcard flashcard={flashcards[currentFlashcardIndex]} />
+            <Flashcard flashcard={flashcards[currentFlashcardIndex]} userAnswer={userAnswer} setUserAnswer={setUserAnswer}/>
           ) : (
             <p>No flashcards created yet.</p>
           )}
@@ -224,7 +228,9 @@ export default function Home() {
             <Button variant="outline" onClick={prevFlashcard}>Previous</Button>
             <Button onClick={nextFlashcard}>Next</Button>
           </div>
-          <Button variant="secondary" className="mt-2" onClick={randomizeFlashcards}>Randomize</Button>
+          <div className="flex justify-center mt-2">
+            <Button variant="secondary" onClick={randomizeFlashcards}>Randomize</Button>
+          </div>
         </div>
 
         {/* Flashcard Creation */}
