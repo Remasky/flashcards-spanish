@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { Flashcard } from "@/components/Flashcard";
 import { FlashcardForm } from "@/components/FlashcardForm";
 import { DeckList } from "@/components/DeckList";
@@ -8,8 +8,6 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const initialFlashcards = [
-    { id: 5, front: "opowiadać", back: "narrar, contar" },
-    { id: 6, front: "odciążać", back: "aliviar" },
     { id: 7, front: "guma do żucia", back: "el chicle" },
     { id: 8, front: "witryna sklepowa", back: "el escaparate/la vidriera" },
     { id: 9, front: "dzwonek do drzwi", back: "el timbre" },
@@ -183,6 +181,8 @@ export default function Home() {
   const [decks, setDecks] = useState(["Default Deck"]);
   const [selectedDeck, setSelectedDeck] = useState("Default Deck");
   const [userAnswer, setUserAnswer] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
 
   const addFlashcard = (front: string, back: string) => {
     const newFlashcard = { id: flashcards.length + 1, front, back };
@@ -192,11 +192,17 @@ export default function Home() {
   const nextFlashcard = () => {
     setCurrentFlashcardIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
     setUserAnswer(""); // Clear the answer field
+    if (inputRef.current) {
+      inputRef.current.focus(); // Set focus to the input field
+    }
   };
 
   const prevFlashcard = () => {
     setCurrentFlashcardIndex((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
     setUserAnswer(""); // Clear the answer field
+    if (inputRef.current) {
+      inputRef.current.focus(); // Set focus to the input field
+    }
   };
 
   const randomizeFlashcards = useCallback(() => {
@@ -219,7 +225,7 @@ export default function Home() {
         {/* Flashcard Display */}
         <div className="md:w-2/4">
           {flashcards.length > 0 ? (
-            <Flashcard flashcard={flashcards[currentFlashcardIndex]} userAnswer={userAnswer} setUserAnswer={setUserAnswer}/>
+            <Flashcard flashcard={flashcards[currentFlashcardIndex]} userAnswer={userAnswer} setUserAnswer={setUserAnswer} inputRef={inputRef}/>
           ) : (
             <p>No flashcards created yet.</p>
           )}

@@ -13,12 +13,12 @@ interface FlashcardProps {
   };
   userAnswer: string;
   setUserAnswer: (answer: string) => void;
+  inputRef: React.RefObject<HTMLInputElement>;
 }
 
-export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, setUserAnswer }) => {
+export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, setUserAnswer, inputRef }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
 
   const handleFlip = () => {
@@ -48,6 +48,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, set
                 className="mb-2"
                 onClick={(e) => e.stopPropagation()} // Prevent card flip on input click
                 autoFocus
+                ref={inputRef}
               />
               <Button onClick={checkAnswer}>Check</Button>
               {isCorrect !== null && (
