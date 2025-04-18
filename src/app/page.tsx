@@ -207,7 +207,7 @@ export default function Home() {
     }
     setCurrentFlashcardIndex(nextIndex);
     setUserAnswer(""); // Clear the answer field
-    setIsCorrect(null);
+    setIsCorrect(null); // Reset the correctness state
     if (inputRef.current) {
       inputRef.current.focus(); // Set focus to the input field
     }
@@ -216,7 +216,7 @@ export default function Home() {
   const prevFlashcard = () => {
     setCurrentFlashcardIndex((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
     setUserAnswer(""); // Clear the answer field
-        setIsCorrect(null);
+    setIsCorrect(null); // Reset the correctness state
 
     if (inputRef.current) {
       inputRef.current.focus(); // Set focus to the input field
