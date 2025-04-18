@@ -1,15 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Flashcard } from "@/components/Flashcard";
 import { FlashcardForm } from "@/components/FlashcardForm";
 import { DeckList } from "@/components/DeckList";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
-  const [flashcards, setFlashcards] = useState([
-    { id: 3, front: "przystępny", back: "asequible" },
-    { id: 4, front: "poślizgnąć się", back: "resbalar" },
+  const initialFlashcards = [
     { id: 5, front: "opowiadać", back: "narrar, contar" },
     { id: 6, front: "odciążać", back: "aliviar" },
     { id: 7, front: "guma do żucia", back: "el chicle" },
@@ -178,7 +176,9 @@ export default function Home() {
     { id: 170, front: "strajk", back: "la huelga" },
     { id: 171, front: "zgadywać", back: "adivinar" },
     { id: 172, front: "zamiennik", back: "el sustituto" },
-  ]);
+  ];
+
+  const [flashcards, setFlashcards] = useState(initialFlashcards);
   const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
   const [decks, setDecks] = useState(["Default Deck"]);
   const [selectedDeck, setSelectedDeck] = useState("Default Deck");
@@ -195,6 +195,12 @@ export default function Home() {
   const prevFlashcard = () => {
     setCurrentFlashcardIndex((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
   };
+
+  const randomizeFlashcards = useCallback(() => {
+    const shuffledFlashcards = [...flashcards].sort(() => Math.random() - 0.5);
+    setFlashcards(shuffledFlashcards);
+    setCurrentFlashcardIndex(0); // Reset to the first flashcard after shuffling
+  }, [flashcards]);
 
   return (
     <div className="container mx-auto p-4">
@@ -218,6 +224,7 @@ export default function Home() {
             <Button variant="outline" onClick={prevFlashcard}>Previous</Button>
             <Button onClick={nextFlashcard}>Next</Button>
           </div>
+          <Button variant="secondary" onClick={randomizeFlashcards}>Randomize</Button>
         </div>
 
         {/* Flashcard Creation */}
@@ -228,5 +235,3 @@ export default function Home() {
     </div>
   );
 }
-
-
