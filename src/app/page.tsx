@@ -258,6 +258,33 @@ export default function Home() {
       setScore(0);
   };
 
+  const removeFlashcard = () => {
+      // Create a new array without the current flashcard
+      const updatedFlashcards = flashcards.filter((_, index) => index !== currentFlashcardIndex);
+
+      // If there are no more flashcards, you might want to handle this case
+      if (updatedFlashcards.length === 0) {
+          setFlashcards([]);
+          setCurrentFlashcardIndex(0); // or any default value
+          setUserAnswer("");
+          setIsCorrect(null);
+          return;
+      }
+
+      // Update the flashcards state
+      setFlashcards(updatedFlashcards);
+
+      // Adjust the current index if necessary
+      const newIndex = Math.min(currentFlashcardIndex, updatedFlashcards.length - 1);
+      setCurrentFlashcardIndex(newIndex);
+
+      // Clear the answer and correctness state
+      setUserAnswer("");
+      setIsCorrect(null);
+      setIsFlipped(false);
+  };
+
+
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-4">
@@ -294,6 +321,7 @@ export default function Home() {
 
           <div className="flex justify-between mt-4">
             <Button variant="outline" onClick={prevFlashcard}>Previous</Button>
+            {isCorrect && (<Button variant="outline" onClick={removeFlashcard}>Got it!</Button>)}
             <Button onClick={nextFlashcard}>Next</Button>
           </div>
           <div className="flex justify-center mt-2">
@@ -347,5 +375,3 @@ export default function Home() {
     </div>
   );
 }
-
-
