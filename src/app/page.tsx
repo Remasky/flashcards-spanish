@@ -197,6 +197,7 @@ export default function Home() {
   const [isGuessingFront, setIsGuessingFront] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [open, setOpen] = useState(false);
+  const [swipeDirection, setSwipeDirection] = useState<"left" | "right" | null>(null);
 
 
   const nextFlashcard = () => {
@@ -238,11 +239,19 @@ export default function Home() {
   };
 
     const onSwipedLeft = () => {
-        nextFlashcard();
+        setSwipeDirection("left");
+        setTimeout(() => {
+            nextFlashcard();
+            setSwipeDirection(null);
+        }, 200);
     };
 
     const onSwipedRight = () => {
-        removeFlashcard();
+        setSwipeDirection("right");
+        setTimeout(() => {
+            removeFlashcard();
+            setSwipeDirection(null);
+        }, 200);
     };
 
     const swipeHandlers = useSwipeable({
@@ -274,6 +283,7 @@ export default function Home() {
               isGuessingFront={isGuessingFront}
               isFlipped={isFlipped}
               setIsFlipped={setIsFlipped}
+              swipeDirection={swipeDirection}
             />
             </div>
           ) : (
@@ -282,7 +292,6 @@ export default function Home() {
 
           <div className="flex justify-between mt-4">
             <Button variant="outline" onClick={prevFlashcard} className="transition-transform duration-300">Previous</Button>
-            <Button variant="outline" onClick={removeFlashcard}>Got it!</Button>
             <Button onClick={nextFlashcard} className="transition-transform duration-300">Next</Button>
           </div>
           <div className="flex justify-center mt-2">
@@ -331,3 +340,4 @@ export default function Home() {
     </div>
   );
 }
+
