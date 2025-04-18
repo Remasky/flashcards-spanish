@@ -192,11 +192,8 @@ export default function Home() {
   const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
   const [decks, setDecks] = useState(["Default Deck"]);
   const [selectedDeck, setSelectedDeck] = useState("Default Deck");
-  const [userAnswer, setUserAnswer] = useState("");
   const [isRandom, setIsRandom] = useState(false); // New state for random toggle
   const [isGuessingFront, setIsGuessingFront] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [score, setScore] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
     const [open, setOpen] = useState(false);
 
@@ -216,46 +213,12 @@ export default function Home() {
       nextIndex = (currentFlashcardIndex + 1) % flashcards.length;
     }
     setCurrentFlashcardIndex(nextIndex);
-    setUserAnswer(""); // Clear the answer field
-    setIsCorrect(null); // Reset the correctness state
     setIsFlipped(false); // Ensure card is flipped to the front
-    if (inputRef.current) {
-      inputRef.current.focus(); // Set focus to the input field
-    }
   };
 
   const prevFlashcard = () => {
     setCurrentFlashcardIndex((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
-    setUserAnswer(""); // Clear the answer field
-    setIsCorrect(null); // Reset the correctness state
     setIsFlipped(false); // Ensure card is flipped to the front
-
-    if (inputRef.current) {
-      inputRef.current.focus(); // Set focus to the input field
-    }
-  };
-
-  const randomizeFlashcards = useCallback(() => {
-    const shuffledFlashcards = [...flashcards].sort(() => Math.random() - 0.5);
-    setFlashcards(shuffledFlashcards);
-    setCurrentFlashcardIndex(0); // Reset to the first flashcard after shuffling
-    setUserAnswer(""); // Clear the answer field
-  }, [flashcards]);
-
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-
-  const checkAnswer = () => {
-      const correctAnswer = isGuessingFront ? flashcards[currentFlashcardIndex].front : flashcards[currentFlashcardIndex].back;
-      const isCorrectAnswer = userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase();
-      setIsCorrect(isCorrectAnswer);
-
-      if (isCorrectAnswer) {
-          setScore(prevScore => prevScore + 1);
-      }
-  };
-
-  const resetScore = () => {
-      setScore(0);
   };
 
   const removeFlashcard = () => {
@@ -266,8 +229,6 @@ export default function Home() {
       if (updatedFlashcards.length === 0) {
           setFlashcards([]);
           setCurrentFlashcardIndex(0); // or any default value
-          setUserAnswer("");
-          setIsCorrect(null);
           return;
       }
 
@@ -277,10 +238,6 @@ export default function Home() {
       // Adjust the current index if necessary
       const newIndex = Math.min(currentFlashcardIndex, updatedFlashcards.length - 1);
       setCurrentFlashcardIndex(newIndex);
-
-      // Clear the answer and correctness state
-      setUserAnswer("");
-      setIsCorrect(null);
       setIsFlipped(false);
   };
 
@@ -289,10 +246,6 @@ export default function Home() {
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">FlashLearn</h1>
-        <div className="flex items-center">
-          <span className="mr-2">Score: {score}</span>
-          <Button variant="outline" size="sm" onClick={resetScore}>Reset Score</Button>
-        </div>
       </div>
 
       <div className="flex flex-col md:flex-row gap-4">
@@ -306,12 +259,7 @@ export default function Home() {
           {flashcards.length > 0 ? (
             <Flashcard
               flashcard={flashcards[currentFlashcardIndex]}
-              userAnswer={userAnswer}
-              setUserAnswer={setUserAnswer}
-              inputRef={inputRef}
               isGuessingFront={isGuessingFront}
-              checkAnswer={checkAnswer}
-              isCorrect={isCorrect}
               isFlipped={isFlipped}
               setIsFlipped={setIsFlipped}
             />
@@ -321,7 +269,7 @@ export default function Home() {
 
           <div className="flex justify-between mt-4">
             <Button variant="outline" onClick={prevFlashcard}>Previous</Button>
-            {isCorrect && (<Button variant="outline" onClick={removeFlashcard}>Got it!</Button>)}
+            <Button variant="outline" onClick={removeFlashcard}>Got it!</Button>
             <Button onClick={nextFlashcard}>Next</Button>
           </div>
           <div className="flex justify-center mt-2">
