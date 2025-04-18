@@ -198,14 +198,26 @@ export default function Home() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [open, setOpen] = useState(false);
   const [swipeDirection, setSwipeDirection] = useState<"left" | "right" | null>(null);
+  const [shuffledFlashcards, setShuffledFlashcards] = useState([...flashcards]);
 
+
+  useEffect(() => {
+    if (isRandom) {
+        setShuffledFlashcards(prevFlashcards => {
+            const shuffled = [...prevFlashcards].sort(() => Math.random() - 0.5);
+            return shuffled;
+        });
+    } else {
+        setShuffledFlashcards([...flashcards]);
+    }
+}, [isRandom, flashcards]);
 
   const nextFlashcard = () => {
     let nextIndex;
     if (isRandom) {
-      nextIndex = Math.floor(Math.random() * flashcards.length);
+        nextIndex = Math.floor(Math.random() * shuffledFlashcards.length);
     } else {
-      nextIndex = (currentFlashcardIndex + 1) % flashcards.length;
+        nextIndex = (currentFlashcardIndex + 1) % flashcards.length;
     }
     setCurrentFlashcardIndex(nextIndex);
     setIsFlipped(false);
@@ -261,6 +273,7 @@ export default function Home() {
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">FlashLearn</h1>
       </div>
+        <div>Flashcards left: {flashcards.length}</div>
 
       <div className="flex flex-col md:flex-row gap-4">
         {/* Deck Management */}
@@ -337,3 +350,4 @@ export default function Home() {
     </div>
   );
 }
+
