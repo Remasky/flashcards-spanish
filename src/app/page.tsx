@@ -9,8 +9,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 export default function Home() {
   const initialFlashcards = [
-    { id: 1, front: "opowiadać", back: "narrar, contar" },
-    { id: 2, front: "odciążać", back: "aliviar" },
     { id: 3, front: "guma do żucia", back: "el chicle" },
     { id: 4, front: "witryna sklepowa", back: "el escaparate/la vidriera" },
     { id: 5, front: "dzwonek do drzwi", back: "el timbre" },
@@ -185,6 +183,7 @@ export default function Home() {
   const [selectedDeck, setSelectedDeck] = useState("Default Deck");
   const [userAnswer, setUserAnswer] = useState("");
   const [isRandom, setIsRandom] = useState(false); // New state for random toggle
+  const [isGuessingFront, setIsGuessingFront] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
 
@@ -236,7 +235,13 @@ export default function Home() {
         {/* Flashcard Display */}
         <div className="md:w-2/4">
           {flashcards.length > 0 ? (
-            <Flashcard flashcard={flashcards[currentFlashcardIndex]} userAnswer={userAnswer} setUserAnswer={setUserAnswer} inputRef={inputRef}/>
+            <Flashcard
+              flashcard={flashcards[currentFlashcardIndex]}
+              userAnswer={userAnswer}
+              setUserAnswer={setUserAnswer}
+              inputRef={inputRef}
+              isGuessingFront={isGuessingFront}
+            />
           ) : (
             <p>No flashcards created yet.</p>
           )}
@@ -249,6 +254,19 @@ export default function Home() {
            <Checkbox id="randomize" checked={isRandom} onCheckedChange={(checked) => setIsRandom(checked)}/>
            <label htmlFor="randomize" className="ml-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Randomize</label>
           </div>
+            <div className="flex justify-center mt-2">
+              <Checkbox
+                id="guess-front"
+                checked={isGuessingFront}
+                onCheckedChange={(checked) => setIsGuessingFront(checked)}
+              />
+              <label
+                htmlFor="guess-front"
+                className="ml-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Guess Front
+              </label>
+            </div>
         </div>
 
         {/* Flashcard Creation */}

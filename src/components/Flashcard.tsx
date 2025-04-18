@@ -14,12 +14,12 @@ interface FlashcardProps {
   userAnswer: string;
   setUserAnswer: (answer: string) => void;
   inputRef: React.RefObject<HTMLInputElement>;
+  isGuessingFront: boolean;
 }
 
-export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, setUserAnswer, inputRef }) => {
+export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, setUserAnswer, inputRef, isGuessingFront }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
@@ -27,19 +27,23 @@ export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, set
   };
 
   const checkAnswer = () => {
-    const correct = userAnswer.trim().toLowerCase() === flashcard.back.trim().toLowerCase();
+    const correctAnswer = isGuessingFront ? flashcard.front : flashcard.back;
+    const correct = userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase();
     setIsCorrect(correct);
   };
+
+  const question = isGuessingFront ? flashcard.back : flashcard.front;
+  const answer = isGuessingFront ? flashcard.front : flashcard.back;
 
   return (
     <Card className={`w-full h-64 flex items-center justify-center cursor-pointer transition-transform duration-500 ${isFlipped ? 'rotate-y-180' : ''}`} onClick={handleFlip}>
       <CardContent className="p-4">
         <div className="w-full h-full flex items-center justify-center text-center">
           {isFlipped ? (
-            <p className="mb-4">{flashcard.back}</p>
+            <p className="mb-4">{answer}</p>
           ) : (
             <div>
-              <p className="mb-4">{flashcard.front}</p>
+              <p className="mb-4">{question}</p>
               <Input
                 type="text"
                 placeholder="Your answer"
