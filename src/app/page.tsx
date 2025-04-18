@@ -8,8 +8,6 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [flashcards, setFlashcards] = useState([
-    { id: 1, front: "What is React?", back: "A JavaScript library for building user interfaces." },
-    { id: 2, front: "What is Next.js?", back: "A React framework for building full-stack web applications." },
     { id: 3, front: "przystępny", back: "asequible" },
     { id: 4, front: "poślizgnąć się", back: "resbalar" },
     { id: 5, front: "opowiadać", back: "narrar, contar" },
@@ -230,4 +228,5 @@ export default function Home() {
     </div>
   );
 }
+
 
