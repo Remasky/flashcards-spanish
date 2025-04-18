@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -18,6 +18,8 @@ interface FlashcardProps {
 export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, setUserAnswer }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
@@ -45,6 +47,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, set
                 onChange={(e) => setUserAnswer(e.target.value)}
                 className="mb-2"
                 onClick={(e) => e.stopPropagation()} // Prevent card flip on input click
+                autoFocus
               />
               <Button onClick={checkAnswer}>Check</Button>
               {isCorrect !== null && (
