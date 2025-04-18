@@ -185,7 +185,7 @@ export default function Home() {
   const [isRandom, setIsRandom] = useState(false); // New state for random toggle
   const [isGuessingFront, setIsGuessingFront] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-
+  const [score, setScore] = useState(0);
 
   const addFlashcard = (front: string, back: string) => {
     const newFlashcard = { id: flashcards.length + 1, front, back };
@@ -193,15 +193,17 @@ export default function Home() {
   };
 
   const nextFlashcard = () => {
+    let nextIndex;
     if (isRandom) {
       // Generate a random index
-      const randomIndex = Math.floor(Math.random() * flashcards.length);
-      setCurrentFlashcardIndex(randomIndex);
+      nextIndex = Math.floor(Math.random() * flashcards.length);
     } else {
       // Go to the next flashcard in order
-      setCurrentFlashcardIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
+      nextIndex = (currentFlashcardIndex + 1) % flashcards.length;
     }
+    setCurrentFlashcardIndex(nextIndex);
     setUserAnswer(""); // Clear the answer field
+    setIsCorrect(null);
     if (inputRef.current) {
       inputRef.current.focus(); // Set focus to the input field
     }
@@ -210,6 +212,8 @@ export default function Home() {
   const prevFlashcard = () => {
     setCurrentFlashcardIndex((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
     setUserAnswer(""); // Clear the answer field
+        setIsCorrect(null);
+
     if (inputRef.current) {
       inputRef.current.focus(); // Set focus to the input field
     }
@@ -222,9 +226,31 @@ export default function Home() {
     setUserAnswer(""); // Clear the answer field
   }, [flashcards]);
 
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+
+  const checkAnswer = () => {
+      const correctAnswer = isGuessingFront ? flashcards[currentFlashcardIndex].front : flashcards[currentFlashcardIndex].back;
+      const isCorrectAnswer = userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase();
+      setIsCorrect(isCorrectAnswer);
+
+      if (isCorrectAnswer) {
+          setScore(prevScore => prevScore + 1);
+      }
+  };
+
+  const resetScore = () => {
+      setScore(0);
+  };
+
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">FlashLearn</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">FlashLearn</h1>
+        <div className="flex items-center">
+          <span className="mr-2">Score: {score}</span>
+          <Button variant="outline" size="sm" onClick={resetScore}>Reset Score</Button>
+        </div>
+      </div>
 
       <div className="flex flex-col md:flex-row gap-4">
         {/* Deck Management */}
@@ -241,6 +267,8 @@ export default function Home() {
               setUserAnswer={setUserAnswer}
               inputRef={inputRef}
               isGuessingFront={isGuessingFront}
+              checkAnswer={checkAnswer}
+              isCorrect={isCorrect}
             />
           ) : (
             <p>No flashcards created yet.</p>
@@ -277,3 +305,4 @@ export default function Home() {
     </div>
   );
 }
+

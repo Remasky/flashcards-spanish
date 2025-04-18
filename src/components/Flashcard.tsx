@@ -15,21 +15,15 @@ interface FlashcardProps {
   setUserAnswer: (answer: string) => void;
   inputRef: React.RefObject<HTMLInputElement>;
   isGuessingFront: boolean;
+  checkAnswer: () => void;
+  isCorrect: boolean | null;
 }
 
-export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, setUserAnswer, inputRef, isGuessingFront }) => {
+export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, setUserAnswer, inputRef, isGuessingFront, checkAnswer, isCorrect }) => {
   const [isFlipped, setIsFlipped] = useState(false);
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
-    setIsCorrect(null); // Reset correctness when flipping
-  };
-
-  const checkAnswer = () => {
-    const correctAnswer = isGuessingFront ? flashcard.front : flashcard.back;
-    const correct = userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase();
-    setIsCorrect(correct);
   };
 
   const question = isGuessingFront ? flashcard.back : flashcard.front;
@@ -54,7 +48,8 @@ export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, set
                 autoFocus
                 ref={inputRef}
               />
-              <Button onClick={checkAnswer}>Check</Button>
+                            <Button onClick={checkAnswer}>Check</Button>
+
               {isCorrect !== null && (
                 <p className={isCorrect ? "text-green-500" : "text-red-500"}>
                   {isCorrect ? "Correct!" : "Incorrect. Try again."}
