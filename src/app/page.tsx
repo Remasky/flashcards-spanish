@@ -233,19 +233,11 @@ export default function Home() {
   };
 
     const onSwipedLeft = () => {
-        setSwipeDirection("left");
-        setTimeout(() => {
-            nextFlashcard();
-            setSwipeDirection(null);
-        }, 200);
+        nextFlashcard();
     };
 
     const onSwipedRight = () => {
-        setSwipeDirection("right");
-        setTimeout(() => {
-            removeFlashcard();
-            setSwipeDirection(null);
-        }, 200);
+        removeFlashcard();
     };
 
     const swipeHandlers = useSwipeable({
@@ -254,6 +246,14 @@ export default function Home() {
         preventDefaultTouchmoveEvent: true,
         trackMouse: true,
     });
+
+  const handleDontKnow = () => {
+    nextFlashcard();
+  };
+
+  const handleGotIt = () => {
+    removeFlashcard();
+  };
 
 
   return (
@@ -283,7 +283,10 @@ export default function Home() {
           ) : (
             <p>No flashcards created yet.</p>
           )}
-
+         <div className="flex justify-center mt-4 gap-4">
+              <Button variant="outline" onClick={handleDontKnow}>Don't Know</Button>
+              <Button onClick={handleGotIt}>Got It!</Button>
+            </div>
           <div className="flex justify-between mt-4">
             <Button variant="outline" onClick={prevFlashcard} className="transition-transform duration-300">Previous</Button>
             <Button onClick={nextFlashcard} className="transition-transform duration-300">Next</Button>
