@@ -14,7 +14,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useSwipeable } from 'react-swipeable';
 
 
 export default function Home() {
@@ -197,7 +196,6 @@ export default function Home() {
   const [isGuessingFront, setIsGuessingFront] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [open, setOpen] = useState(false);
-  const [swipeDirection, setSwipeDirection] = useState<"left" | "right" | null>(null);
   const [shuffledFlashcards, setShuffledFlashcards] = useState([...flashcards]);
 
 
@@ -244,21 +242,6 @@ export default function Home() {
       setIsFlipped(false);
   };
 
-    const onSwipedLeft = () => {
-        nextFlashcard();
-    };
-
-    const onSwipedRight = () => {
-        removeFlashcard();
-    };
-
-    const swipeHandlers = useSwipeable({
-        onSwipedLeft: onSwipedLeft,
-        onSwipedRight: onSwipedRight,
-        preventDefaultTouchmoveEvent: true,
-        trackMouse: true,
-    });
-
   const handleDontKnow = () => {
     nextFlashcard();
   };
@@ -284,15 +267,14 @@ export default function Home() {
         {/* Flashcard Display */}
         <div className="md:w-3/4">
           {flashcards.length > 0 ? (
-            <div {...swipeHandlers}>
+            
             <Flashcard
               flashcard={flashcards[currentFlashcardIndex]}
               isGuessingFront={isGuessingFront}
               isFlipped={isFlipped}
               setIsFlipped={setIsFlipped}
-              swipeDirection={swipeDirection}
             />
-            </div>
+            
           ) : (
             <p>No flashcards created yet.</p>
           )}
@@ -350,4 +332,5 @@ export default function Home() {
     </div>
   );
 }
+
 
