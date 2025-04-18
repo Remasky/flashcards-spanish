@@ -224,7 +224,7 @@ export default function Home() {
             <Button variant="outline" onClick={prevFlashcard}>Previous</Button>
             <Button onClick={nextFlashcard}>Next</Button>
           </div>
-          <Button variant="secondary" onClick={randomizeFlashcards}>Randomize</Button>
+          <Button variant="secondary" className="mt-2" onClick={randomizeFlashcards}>Randomize</Button>
         </div>
 
         {/* Flashcard Creation */}

@@ -33,8 +33,10 @@ export const Flashcard: React.FC<FlashcardProps> = ({ flashcard }) => {
       <CardContent className="p-4">
         <div className="w-full h-full flex items-center justify-center text-center">
           {isFlipped ? (
+            <p className="mb-4">{flashcard.back}</p>
+          ) : (
             <div>
-              <p className="mb-4">{flashcard.back}</p>
+              <p className="mb-4">{flashcard.front}</p>
               <Input
                 type="text"
                 placeholder="Your answer"
@@ -49,12 +51,9 @@ export const Flashcard: React.FC<FlashcardProps> = ({ flashcard }) => {
                 </p>
               )}
             </div>
-          ) : (
-            flashcard.front
           )}
         </div>
       </CardContent>
     </Card>
   );
 };
-
