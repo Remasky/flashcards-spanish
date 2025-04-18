@@ -243,7 +243,7 @@ export default function Home() {
 
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 transition-all duration-300">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">FlashLearn</h1>
       </div>
@@ -268,9 +268,9 @@ export default function Home() {
           )}
 
           <div className="flex justify-between mt-4">
-            <Button variant="outline" onClick={prevFlashcard}>Previous</Button>
+            <Button variant="outline" onClick={prevFlashcard} className="transition-transform duration-300">Previous</Button>
             <Button variant="outline" onClick={removeFlashcard}>Got it!</Button>
-            <Button onClick={nextFlashcard}>Next</Button>
+            <Button onClick={nextFlashcard} className="transition-transform duration-300">Next</Button>
           </div>
           <div className="flex justify-center mt-2">
            <Checkbox id="randomize" checked={isRandom} onCheckedChange={(checked) => setIsRandom(checked)}/>
@@ -323,3 +323,4 @@ export default function Home() {
     </div>
   );
 }
+

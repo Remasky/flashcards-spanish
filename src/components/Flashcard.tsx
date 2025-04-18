@@ -44,3 +44,4 @@ export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, isGuessingFront
     </Card>
   );
 };
+
