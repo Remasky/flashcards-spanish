@@ -23,12 +23,9 @@ export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, isGuessingFront
   const question = isGuessingFront ? flashcard.back : flashcard.front;
   const answer = isGuessingFront ? flashcard.front : flashcard.back;
 
-    let cardClassName = "w-full h-64 flex items-center justify-center cursor-pointer transition-transform duration-200";
-    cardClassName += ` ${isFlipped ? 'rotate-y-180' : ''}`;
-
   return (
-    <Card className={cardClassName} onClick={handleFlip}>
-      <CardContent className="p-4">
+    <Card className="w-full h-64 flex items-center justify-center cursor-pointer transition-transform duration-200">
+      <CardContent className={`p-4 ${isFlipped ? 'bg-secondary' : 'bg-card'}`}>
         <div className="w-full h-full flex items-center justify-center text-center">
           {isFlipped ? (
             <p className="mb-4">{answer}</p>
