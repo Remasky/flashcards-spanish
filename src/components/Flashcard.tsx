@@ -32,6 +32,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, set
 
   // Determine the card's background color based on whether the answer is correct
   let cardClassName = "w-full h-64 flex items-center justify-center cursor-pointer transition-transform duration-500";
+  
   if (isCorrect === true) {
       cardClassName += " bg-green-200"; // Green background for correct answer
   } else if (isCorrect === false) {
@@ -39,6 +40,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, set
   } else {
       cardClassName += " bg-card"; // Default background color
   }
+
   cardClassName += ` ${isFlipped ? 'rotate-y-180' : ''}`;
 
   return (
