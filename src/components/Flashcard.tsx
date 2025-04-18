@@ -23,13 +23,17 @@ export const Flashcard: React.FC<FlashcardProps> = ({ flashcard }) => {
     setIsCorrect(null); // Reset correctness when flipping
   };
 
+  const handleInputFocus = () => {
+    setIsFlipped(true);
+  };
+
   const checkAnswer = () => {
     const correct = userAnswer.trim().toLowerCase() === flashcard.back.trim().toLowerCase();
     setIsCorrect(correct);
   };
 
   return (
-    <Card onClick={handleFlip} className={`w-full h-64 flex items-center justify-center cursor-pointer transition-transform duration-500 ${isFlipped ? 'rotate-y-180' : ''}`}>
+    <Card className={`w-full h-64 flex items-center justify-center cursor-pointer transition-transform duration-500 ${isFlipped ? 'rotate-y-180' : ''}`}>
       <CardContent className="p-4">
         <div className="w-full h-full flex items-center justify-center text-center">
           {isFlipped ? (
@@ -43,6 +47,7 @@ export const Flashcard: React.FC<FlashcardProps> = ({ flashcard }) => {
                 value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
                 className="mb-2"
+                onFocus={handleInputFocus}
               />
               <Button onClick={checkAnswer}>Check</Button>
               {isCorrect !== null && (
