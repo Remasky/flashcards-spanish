@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Flashcard } from "@/components/Flashcard";
-import { FlashcardForm } from "@/components/FlashcardForm";
 import { DeckList } from "@/components/DeckList";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -200,11 +199,6 @@ export default function Home() {
   const [open, setOpen] = useState(false);
 
 
-  const addFlashcard = (front: string, back: string) => {
-    const newFlashcard = { id: flashcards.length + 1, front, back };
-    setFlashcards([...flashcards, newFlashcard]);
-  };
-
   const nextFlashcard = () => {
     let nextIndex;
     if (isRandom) {
@@ -272,7 +266,7 @@ export default function Home() {
         </div>
 
         {/* Flashcard Display */}
-        <div className="md:w-2/4">
+        <div className="md:w-3/4">
           {flashcards.length > 0 ? (
             <div {...swipeHandlers}>
             <Flashcard
@@ -333,14 +327,7 @@ export default function Home() {
                 </DialogContent>
               </Dialog>
         </div>
-
-        {/* Flashcard Creation */}
-        <div className="md:w-1/4">
-          <FlashcardForm onSubmit={addFlashcard} />
-        </div>
       </div>
     </div>
   );
 }
-
-
