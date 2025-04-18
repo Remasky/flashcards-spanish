@@ -193,7 +193,7 @@ export default function Home() {
   const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
   const [decks, setDecks] = useState(["Default Deck"]);
   const [selectedDeck, setSelectedDeck] = useState("Default Deck");
-  const [isRandom, setIsRandom] = useState(false); // New state for random toggle
+  const [isRandom, setIsRandom] = useState(false);
   const [isGuessingFront, setIsGuessingFront] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [open, setOpen] = useState(false);
@@ -203,36 +203,30 @@ export default function Home() {
   const nextFlashcard = () => {
     let nextIndex;
     if (isRandom) {
-      // Generate a random index
       nextIndex = Math.floor(Math.random() * flashcards.length);
     } else {
-      // Go to the next flashcard in order
       nextIndex = (currentFlashcardIndex + 1) % flashcards.length;
     }
     setCurrentFlashcardIndex(nextIndex);
-    setIsFlipped(false); // Ensure card is flipped to the front
+    setIsFlipped(false);
   };
 
   const prevFlashcard = () => {
     setCurrentFlashcardIndex((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
-    setIsFlipped(false); // Ensure card is flipped to the front
+    setIsFlipped(false);
   };
 
   const removeFlashcard = () => {
-      // Create a new array without the current flashcard
       const updatedFlashcards = flashcards.filter((_, index) => index !== currentFlashcardIndex);
 
-      // If there are no more flashcards, you might want to handle this case
       if (updatedFlashcards.length === 0) {
           setFlashcards([]);
-          setCurrentFlashcardIndex(0); // or any default value
+          setCurrentFlashcardIndex(0);
           return;
       }
 
-      // Update the flashcards state
       setFlashcards(updatedFlashcards);
 
-      // Adjust the current index if necessary
       const newIndex = Math.min(currentFlashcardIndex, updatedFlashcards.length - 1);
       setCurrentFlashcardIndex(newIndex);
       setIsFlipped(false);
@@ -340,4 +334,3 @@ export default function Home() {
     </div>
   );
 }
-
