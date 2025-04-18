@@ -17,10 +17,11 @@ interface FlashcardProps {
   isGuessingFront: boolean;
   checkAnswer: () => void;
   isCorrect: boolean | null;
+  isFlipped: boolean;
+  setIsFlipped: (isFlipped: boolean) => void;
 }
 
-export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, setUserAnswer, inputRef, isGuessingFront, checkAnswer, isCorrect }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
+export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, setUserAnswer, inputRef, isGuessingFront, checkAnswer, isCorrect, isFlipped, setIsFlipped }) => {
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
@@ -62,3 +63,4 @@ export const Flashcard: React.FC<FlashcardProps> = ({ flashcard, userAnswer, set
     </Card>
   );
 };
+

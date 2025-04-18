@@ -190,6 +190,7 @@ export default function Home() {
   const [isGuessingFront, setIsGuessingFront] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [score, setScore] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false);
 
   const addFlashcard = (front: string, back: string) => {
     const newFlashcard = { id: flashcards.length + 1, front, back };
@@ -208,6 +209,7 @@ export default function Home() {
     setCurrentFlashcardIndex(nextIndex);
     setUserAnswer(""); // Clear the answer field
     setIsCorrect(null); // Reset the correctness state
+    setIsFlipped(false); // Ensure card is flipped to the front
     if (inputRef.current) {
       inputRef.current.focus(); // Set focus to the input field
     }
@@ -217,6 +219,7 @@ export default function Home() {
     setCurrentFlashcardIndex((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
     setUserAnswer(""); // Clear the answer field
     setIsCorrect(null); // Reset the correctness state
+    setIsFlipped(false); // Ensure card is flipped to the front
 
     if (inputRef.current) {
       inputRef.current.focus(); // Set focus to the input field
@@ -273,6 +276,8 @@ export default function Home() {
               isGuessingFront={isGuessingFront}
               checkAnswer={checkAnswer}
               isCorrect={isCorrect}
+              isFlipped={isFlipped}
+              setIsFlipped={setIsFlipped}
             />
           ) : (
             <p>No flashcards created yet.</p>
@@ -309,3 +314,4 @@ export default function Home() {
     </div>
   );
 }
+
