@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Home() {
   const initialFlashcards = [
@@ -323,15 +324,17 @@ export default function Home() {
                       Here's a preview of all the words in your flashcards:
                     </DialogDescription>
                   </DialogHeader>
-                  <div className="grid gap-4 py-4">
-                    {flashcards.map((card) => (
-                      <div key={card.id} className="flex justify-between">
-                        <span>{card.front}</span>
-                        <span>-</span>
-                        <span>{card.back}</span>
-                      </div>
-                    ))}
-                  </div>
+                  <ScrollArea className="h-[300px]">
+                    <div className="grid gap-4 py-4">
+                      {flashcards.map((card) => (
+                        <div key={card.id} className="flex justify-between">
+                          <span>{card.front}</span>
+                          <span>-</span>
+                          <span>{card.back}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </ScrollArea>
                 </DialogContent>
               </Dialog>
         </div>
@@ -344,5 +347,3 @@ export default function Home() {
     </div>
   );
 }
-
-
