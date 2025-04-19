@@ -1,0 +1,49 @@
+[debug] [2025-04-19T20:09:39.082Z] ----------------------------------------------------------------------
+[debug] [2025-04-19T20:09:39.087Z] Command:       /nix/store/ixbb20farqh1f4fqbmsn6b1ixn8mc8ij-nodejs-20.18.1/bin/node /nix/store/b9a1wqzb1vkh5xd2mrp196csvbgv8j13-firebase-tools-14.0.1/lib/node_modules/firebase-tools/lib/bin/firebase.js init hosting
+[debug] [2025-04-19T20:09:39.089Z] CLI Version:   14.0.1
+[debug] [2025-04-19T20:09:39.089Z] Platform:      linux
+[debug] [2025-04-19T20:09:39.089Z] Node Version:  v20.18.1
+[debug] [2025-04-19T20:09:39.089Z] Time:          Sat Apr 19 2025 20:09:39 GMT+0000 (Coordinated Universal Time)
+[debug] [2025-04-19T20:09:39.090Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-04-19T20:09:39.105Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-04-19T20:09:39.107Z] > authorizing via signed-in user (rmfkwiatkowski@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /home/user/studio
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2025-04-19T20:09:47.389Z] Checked if tokens are valid: true, expires at: 1745096904382
+[debug] [2025-04-19T20:09:47.390Z] Checked if tokens are valid: true, expires at: 1745096904382
+[debug] [2025-04-19T20:09:47.397Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=100
+[debug] [2025-04-19T20:09:47.927Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2025-04-19T20:09:47.927Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[info] i  Using project flashlearn-ntzro (FlashLearn) 
+[info] 
+=== Hosting Setup
+[debug] [2025-04-19T20:09:50.032Z] Checked if tokens are valid: true, expires at: 1745096904382
+[debug] [2025-04-19T20:09:50.032Z] Checked if tokens are valid: true, expires at: 1745096904382
+[debug] [2025-04-19T20:09:50.033Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/flashlearn-ntzro [none]
+[debug] [2025-04-19T20:09:50.277Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/flashlearn-ntzro 200
+[debug] [2025-04-19T20:09:50.278Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/flashlearn-ntzro {"projectId":"flashlearn-ntzro","projectNumber":"967661692588","displayName":"FlashLearn","name":"projects/flashlearn-ntzro","resources":{"hostingSite":"flashlearn-ntzro"},"state":"ACTIVE","etag":"1_fcaebb2b-25ec-4a1d-8cd8-b751f832af1e"}
+[info] 
+[info] i  Detected a .git folder at /home/user/studio 
+[info] i  Authorizing with GitHub to upload your service account to a GitHub repository's secrets store. 
+[info] 
+[info] Visit this URL on this device to log in:
+[info] https://github.com/login/oauth/authorize?client_id=89cf50f02ac6aaed3484&state=939633221&redirect_uri=http%3A%2F%2Flocalhost%3A9005&scope=read%3Auser%20repo%20public_repo
+[info] 
+[info] Waiting for authentication...
